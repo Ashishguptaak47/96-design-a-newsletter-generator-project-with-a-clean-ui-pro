@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newsletter Studio Generator</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar / Controls -->
+    <aside class="sidebar">
+      <div class="brand">
+        <i class="fa-solid fa-paper-plane"></i>
+        <h2>Newsletter Studio</h2>
+      </div>
+      
+      <form id="newsletter-form" onsubmit="return false;">
+        <div class="section-title">Header Settings</div>
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" id="title" value="Tech Pulse Weekly" oninput="renderPreview()">
+        </div>
+        <div class="form-group">
+          <label>Tagline</label>
+          <input type="text" id="tagline" value="The latest insights in tech & code" oninput="renderPreview()">
+        </div>
+
+        <div class="section-title">
+          <span>Content Blocks</span>
+          <div class="add-buttons">
+            <button type="button" onclick="addBlock('article')" class="btn-sm"><i class="fa-solid fa-plus"></i> Article</button>
+            <button type="button" onclick="addBlock('sponsor')" class="btn-sm"><i class="fa-solid fa-star"></i> Sponsor</button>
+            <button type="button" onclick="addBlock('cta')" class="btn-sm"><i class="fa-solid fa-link"></i> CTA</button>
+          </div>
+        </div>
+        
+        <div id="blocks-container"></div>
+
+        <div class="section-title">RSS Feed Importer</div>
+        <div class="form-group rss-input-group">
+          <input type="url" id="rss-url" placeholder="https://news.ycombinator.com/rss">
+          <button type="button" class="btn-secondary" onclick="importRSS()"><i class="fa-solid fa-download"></i></button>
+        </div>
+        <div id="rss-results" class="rss-results"></div>
+
+        <div class="section-title">Footer</div>
+        <div class="form-group">
+          <textarea id="footer" rows="2" oninput="renderPreview()">You are receiving this newsletter because you opted in via our website.</textarea>
+        </div>
+      </form>
+    </aside>
+
+    <!-- Main Content / Preview -->
+    <main class="preview-pane">
+      <div class="top-bar">
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab('html')"><i class="fa-solid fa-eye"></i> HTML Preview</button>
+          <button class="tab-btn" onclick="switchTab('markdown')"><i class="fa-brands fa-markdown"></i> Markdown Source</button>
+        </div>
+        <div class="actions">
+          <button onclick="exportFile('html')" class="btn-primary"><i class="fa-solid fa-file-code"></i> Export HTML</button>
+          <button onclick="exportFile('markdown')" class="btn-secondary"><i class="fa-solid fa-file-lines"></i> Export MD</button>
+        </div>
+      </div>
+
+      <div class="preview-content">
+        <div id="html-preview-tab" class="tab-content active">
+          <iframe id="preview-frame"></iframe>
+        </div>
+        <div id="markdown-preview-tab" class="tab-content">
+          <textarea id="markdown-output" readonly></textarea>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
